@@ -30,13 +30,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun LabScreen(modifier: Modifier = Modifier) {
-
     var num1 by remember { mutableStateOf("") }
     var num2 by remember { mutableStateOf("") }
     var num3 by remember { mutableStateOf("") }
     var symbol by remember { mutableStateOf("") }
     var resultText by remember { mutableStateOf("") }
-
 
     Column(
         modifier = modifier
@@ -45,14 +43,12 @@ fun LabScreen(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text(
             text = "Вариант 0. Введите данные",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(16.dp))
-
 
         OutlinedTextField(
             value = num1,
@@ -62,7 +58,6 @@ fun LabScreen(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-
         OutlinedTextField(
             value = num2,
             onValueChange = { num2 = it },
@@ -71,7 +66,6 @@ fun LabScreen(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-
         OutlinedTextField(
             value = num3,
             onValueChange = { num3 = it },
@@ -79,7 +73,6 @@ fun LabScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
-
 
         OutlinedTextField(
             value = symbol,
@@ -92,11 +85,29 @@ fun LabScreen(modifier: Modifier = Modifier) {
 
         Button(onClick = {
 
+            val x1 = num1.toDoubleOrNull()
+            val x2 = num2.toDoubleOrNull()
+            val x3 = num3.toDoubleOrNull()
+            val sym = symbol.trim().lowercase()
+
+
+            if (x1 == null || x2 == null || x3 == null) {
+                resultText = "Ошибка: введите корректные числа"
+            } else {
+
+                if (sym == "a") {
+                    val avg = (x1 + x2 + x3) / 3.0
+                    resultText = "Среднее арифметическое: $avg"
+                } else {
+                    resultText = "Ошибка: неизвестный символ (пока поддерживается только 'a')"
+                }
+            }
         }) {
             Text("OK")
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        // ---------------------------------------------------
 
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = resultText,
