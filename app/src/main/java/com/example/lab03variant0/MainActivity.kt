@@ -10,10 +10,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview // Добавлен импорт для Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lab03variant0.ui.theme.Lab03Variant0Theme
-import kotlin.math.cbrt // Добавлен импорт для кубического корня
+import kotlin.math.cbrt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +84,6 @@ fun LabScreen(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // --- ИЗМЕНЕНИЕ НА ШАГЕ 5: Использование when и добавление логики для 'g' ---
         Button(onClick = {
             val x1 = num1.toDoubleOrNull()
             val x2 = num2.toDoubleOrNull()
@@ -93,7 +93,6 @@ fun LabScreen(modifier: Modifier = Modifier) {
             if (x1 == null || x2 == null || x3 == null) {
                 resultText = "Ошибка: введите корректные числа"
             } else {
-                // Заменяем if на when
                 resultText = when (sym) {
                     "a" -> {
                         val avg = (x1 + x2 + x3) / 3.0
@@ -114,7 +113,6 @@ fun LabScreen(modifier: Modifier = Modifier) {
         }) {
             Text("OK")
         }
-        // ---------------------------------------------------------------------------
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -124,3 +122,15 @@ fun LabScreen(modifier: Modifier = Modifier) {
         )
     }
 }
+
+// --- ИЗМЕНЕНИЕ НА ШАГЕ 6: Добавлена функция предпросмотра ---
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun LabScreenPreview() {
+    Lab03Variant0Theme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            LabScreen(modifier = Modifier.padding(innerPadding))
+        }
+    }
+}
+// ----------------------------------------------------------
