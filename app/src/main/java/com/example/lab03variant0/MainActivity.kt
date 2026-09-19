@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lab03variant0.ui.theme.Lab03Variant0Theme
+import kotlin.math.cbrt // Добавлен импорт для кубического корня
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,30 +83,38 @@ fun LabScreen(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-
+        // --- ИЗМЕНЕНИЕ НА ШАГЕ 5: Использование when и добавление логики для 'g' ---
         Button(onClick = {
-
             val x1 = num1.toDoubleOrNull()
             val x2 = num2.toDoubleOrNull()
             val x3 = num3.toDoubleOrNull()
             val sym = symbol.trim().lowercase()
 
-
             if (x1 == null || x2 == null || x3 == null) {
                 resultText = "Ошибка: введите корректные числа"
             } else {
-
-                if (sym == "a") {
-                    val avg = (x1 + x2 + x3) / 3.0
-                    resultText = "Среднее арифметическое: $avg"
-                } else {
-                    resultText = "Ошибка: неизвестный символ (пока поддерживается только 'a')"
+                // Заменяем if на when
+                resultText = when (sym) {
+                    "a" -> {
+                        val avg = (x1 + x2 + x3) / 3.0
+                        "Среднее арифметическое: $avg"
+                    }
+                    "g" -> {
+                        val product = x1 * x2 * x3
+                        if (product < 0) {
+                            "Ошибка: среднее геометрическое только для неотрицательных чисел"
+                        } else {
+                            val geom = cbrt(product)
+                            "Среднее геометрическое: $geom"
+                        }
+                    }
+                    else -> "Ошибка: неизвестный символ. Введите a или g"
                 }
             }
         }) {
             Text("OK")
         }
-        // ---------------------------------------------------
+        // ---------------------------------------------------------------------------
 
         Spacer(modifier = Modifier.height(16.dp))
 
